@@ -12,7 +12,7 @@ public class CommandManager
         _commands[command.Name.ToLower()] = command;
     }
 
-    public void Execute(string input, MaterialList list)
+    public void Execute(string input, MaterialList list, string basePath)
     {
         if (string.IsNullOrWhiteSpace(input)) return;
 
@@ -21,7 +21,7 @@ public class CommandManager
 
         if (_commands.TryGetValue(cmdName, out var cmd))
         {
-            cmd.Execute(parts, list);
+            cmd.Execute(parts, list, basePath);
         }
         else
         {
@@ -32,6 +32,8 @@ public class CommandManager
     public void ShowHelp()
     {
         Console.WriteLine("📜 Verfügbare Befehle:");
+        Console.WriteLine("- help: Zeigt diese Liste an.");
+        Console.WriteLine("- back: Schließt die Materialliste");
         foreach (var c in _commands.Values)
             Console.WriteLine($"- {c.Name}: {c.Description}");
     }

@@ -6,5 +6,5 @@ public interface IUserCommand
 {
     string Name { get; }
     string Description { get; }
-    void Execute(string[] args, MaterialList list);
+    void Execute(string[] args, MaterialList list, string basePath);
 }

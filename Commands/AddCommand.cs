@@ -9,7 +9,7 @@ public class AddCommand : IUserCommand
     public string Name => "add";
     public string Description => "Fügt ein Material mit Menge hinzu: add <name> <anzahl>";
     
-    public void Execute(string[] args, MaterialList list)
+    public void Execute(string[] args, MaterialList list, string basePath)
     {
         if (args.Length < 3 || !int.TryParse(args[2], out int amount))
         {

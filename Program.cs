@@ -136,9 +136,8 @@ namespace Lumify
             string json = File.ReadAllText(filePath);
 
             var list = JsonSerializer.Deserialize<MaterialList>(json) ?? new MaterialList(name);
-            Console.Clear();
 
-            //TODO new ProjectHandler
+            ListHandler.Run(list, filePath);
         }
 
         static void ListProjects()
