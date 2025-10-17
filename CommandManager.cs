@@ -1,0 +1,38 @@
+﻿using Lumify.Models;
+using Lumify.Interfaces;
+
+namespace Lumify;
+
+public class CommandManager
+{
+    private readonly Dictionary<string, IUserCommand> _commands = new();
+
+    public void Register(IUserCommand command)
+    {
+        _commands[command.Name.ToLower()] = command;
+    }
+
+    public void Execute(string input, MaterialList list)
+    {
+        if (string.IsNullOrWhiteSpace(input)) return;
+
+        string[] parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        string cmdName = parts[0].ToLower();
+
+        if (_commands.TryGetValue(cmdName, out var cmd))
+        {
+            cmd.Execute(parts, list);
+        }
+        else
+        {
+            Console.WriteLine("| ❌ | Unbekannter Befehl. Tippe 'help' für eine Liste.");
+        }
+    }
+    
+    public void ShowHelp()
+    {
+        Console.WriteLine("📜 Verfügbare Befehle:");
+        foreach (var c in _commands.Values)
+            Console.WriteLine($"- {c.Name}: {c.Description}");
+    }
+}

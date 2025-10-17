@@ -6,16 +6,23 @@ namespace Lumify
 {
     class Program
     {
-        static readonly string basePath = @"C:\ProgramData\Lumify\Lists";
+        private const string MaterialListsPath = @"C:\ProgramData\Lumify\Lists";
 
         static void Main(string[] args)
         {
+            Console.Title = "Lumify";
+            
             Console.OutputEncoding = Encoding.UTF8;
+            
+            Console.ForegroundColor= ConsoleColor.Green;
+            Console.WriteLine("| ✅ | Lumify gestartet.");
+            Console.ResetColor();
+            
             int currentCodePage = Console.OutputEncoding.CodePage;
             if (currentCodePage != 65001)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("| ⚠️ | Es ist keine UTF-8 Codierung aktiviert! Manche Zeichen könnten fehlerhaft angezeigt werden.");
+                Console.WriteLine("| ⚠️ | Es ist keine UTF-8 Codierung aktiviert! Manche Zeichen könnten fehlerhaft dargestellt werden.");
                 Console.ResetColor();
             }
             else
@@ -24,11 +31,13 @@ namespace Lumify
                 Console.WriteLine("| ✅ | UTF-8 Codierung verfügbar. ^_~");
                 Console.ResetColor();
             }
+            
+            Console.WriteLine("\n");
 
-            if (!Directory.Exists(basePath))
+            if (!Directory.Exists(MaterialListsPath))
             {
 
-                Directory.CreateDirectory(basePath);
+                Directory.CreateDirectory(MaterialListsPath);
             }
             //----
             //TODO Ladebalken einfügen beim Laden von Material-Listen
@@ -94,7 +103,7 @@ namespace Lumify
 
         static private void CreateNewProject(string name)
         {
-            string filePath = Path.Combine(basePath, $"{name}.json");
+            string filePath = Path.Combine(MaterialListsPath, $"{name}.json");
 
             if (File.Exists(filePath))
             {
@@ -109,14 +118,14 @@ namespace Lumify
 
         static private void SaveProject(MaterialList list)
         {
-            string filePath = Path.Combine(basePath, $"{list.Name}.json");
+            string filePath = Path.Combine(MaterialListsPath, $"{list.Name}.json");
             string json = JsonSerializer.Serialize(list, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(filePath, json);
         }
 
         static private void OpenProject(string name)
         {
-            string filePath = Path.Combine(basePath, $"{name}.json");
+            string filePath = Path.Combine(MaterialListsPath, $"{name}.json");
 
             if (!File.Exists(filePath))
             {
@@ -127,13 +136,14 @@ namespace Lumify
             string json = File.ReadAllText(filePath);
 
             var list = JsonSerializer.Deserialize<MaterialList>(json) ?? new MaterialList(name);
+            Console.Clear();
 
             //TODO new ProjectHandler
         }
 
         static void ListProjects()
         {
-            var files = Directory.GetFiles(basePath, "*.json");
+            var files = Directory.GetFiles(MaterialListsPath, "*.json");
             if (files.Length == 0)
             {
                 Console.WriteLine("Keine Projekte gefunden.");
