@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Nodes;
-using Lumify.Commands;
+﻿using Lumify.Commands;
 using Lumify.Core.Commands;
 using Lumify.Models;
 
@@ -14,6 +13,7 @@ public class ListHandler
         commandManager.Register(new AddCommand());
         commandManager.Register(new ShowCommand());
         commandManager.Register(new SaveCommand());
+        commandManager.Register(new RemoveCommand());
         //TODO more commands
         
         materialListPath = Path.GetFullPath(materialListPath);
