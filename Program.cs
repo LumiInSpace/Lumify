@@ -43,8 +43,8 @@ namespace Lumify
             //TODO Ladebalken einfügen beim Laden von Material-Listen
             //Load Material Lists
             //----
-            string[] availableCommands = { "new", "show", "open", "exit" };
-            Console.WriteLine("Verfügbare Befehle: new <name>, show, open <name>, exit");
+            string[] availableCommands = { "new", "show", "open", "exit", "import", "help" };
+            Console.WriteLine("Verfügbare Befehle: new <name>, show, open <name>, import, exit");
 
             while (true)
             {
@@ -88,6 +88,10 @@ namespace Lumify
                             break;
                         }
                         OpenProject(parts[1]);
+                        break;
+
+                    case "import":
+                        ImportData(); 
                         break;
 
                     case "exit":
@@ -154,6 +158,11 @@ namespace Lumify
             {
                 Console.WriteLine(" - " + Path.GetFileNameWithoutExtension(f));
             }
+        }
+
+        static void ImportData()
+        {
+            ImportHandler.Run();
         }
     }
 }
