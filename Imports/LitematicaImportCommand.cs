@@ -11,57 +11,36 @@ namespace Lumify.Imports
 
         public Dictionary<string, int> Execute(string filePath)
         {
+            Console.WriteLine();
+            Console.WriteLine("Open"
             using var fileStream = File.OpenRead(filePath);
-            using var gzipStream = new GZipStream(fileStream, CompressionMode.Decompress);
+            using var gzip = new GZipStream(fileStream, CompressionMode.Decompress);
             var nbtFile = new NbtFile();
-            nbtFile.LoadFromStream(gzipStream, NbtCompression.None);
+            nbtFile.LoadFromStream(gzip, NbtCompression.None);
 
             var root = nbtFile.RootTag;
             var regions = root.Get<NbtCompound>("Regions");
-            var items = new Dictionary<string, int>();
+            var items = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var regionEntry in regions)
             {
                 var region = (NbtCompound)regionEntry;
                 var palette = region.Get<NbtList>("BlockStatePalette");
-                var blockStates = region.Get<NbtLongArray>("BlockStates").Value;
-                var size = region.Get<NbtIntArray>("Size").Value;
 
-                int totalBlocks = size[0] * size[1] * size[2];
-                int bitsPerBlock = Math.Max(4, (int)Math.Ceiling(Math.Log2(palette.Count)));
-                ulong mask = (1UL << bitsPerBlock) - 1;
-                ulong[] data = Array.ConvertAll(blockStates, v => (ulong)v);
-
-                int bitIndex = 0;
-                for (int i = 0; i < totalBlocks; i++)
+                foreach (var tag in palette)
                 {
-                    int longIndex = bitIndex / 64;
-                    int bitOffset = bitIndex % 64;
+                    var blockCompound = (NbtCompound)tag;
+                    string blockName = blockCompound.Get<NbtString>("Name").Value;
 
-                    ulong blockData = data[longIndex] >> bitOffset;
-                    int remainingBits = 64 - bitOffset;
-                    if (remainingBits < bitsPerBlock)
-                        blockData |= data[longIndex + 1] << remainingBits;
+                    if (blockName == "minecraft:air") continue; // ignore air, because it's not a placeable Block
 
-                    int paletteIndex = (int)(blockData & mask);
-                    var blockTag = (NbtCompound)palette[paletteIndex];
-                    string blockName = blockTag.Get<NbtString>("Name").Value;
 
-                    // Überspringe Luft
-                    if (blockName == "minecraft:air")
-                    {
-                        bitIndex += bitsPerBlock;
-                        continue;
-                    }
 
-                    if (items.ContainsKey(blockName))
-                        items[blockName]++;
-                    else
-                        items[blockName] = 1;
+                    if (!items.ContainsKey(blockName))
+                        items[blockName] = 0;
 
-                    bitIndex += bitsPerBlock;
+                    items[blockName]++;
                 }
-
             }
 
             return items;
