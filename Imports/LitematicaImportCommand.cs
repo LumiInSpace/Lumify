@@ -1,6 +1,5 @@
 ﻿using fNbt;
 using Lumify.Interfaces;
-using System.IO;
 using System.IO.Compression;
 
 namespace Lumify.Imports
@@ -9,41 +8,68 @@ namespace Lumify.Imports
     {
         public string FileExtension => "litematic";
 
-        public Dictionary<string, int> Execute(string filePath)
+        public Dictionary<string, int>? Execute(string filePath)
         {
-            Console.WriteLine();
-            Console.WriteLine("Open"
-            using var fileStream = File.OpenRead(filePath);
-            using var gzip = new GZipStream(fileStream, CompressionMode.Decompress);
-            var nbtFile = new NbtFile();
-            nbtFile.LoadFromStream(gzip, NbtCompression.None);
+            TaskStatusManager statusManager = new TaskStatusManager();
+            statusManager.Start("import_task", "Importiere Datei");
 
-            var root = nbtFile.RootTag;
-            var regions = root.Get<NbtCompound>("Regions");
-            var items = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-
-            foreach (var regionEntry in regions)
+            try
             {
-                var region = (NbtCompound)regionEntry;
-                var palette = region.Get<NbtList>("BlockStatePalette");
-
-                foreach (var tag in palette)
+                // --- Datei öffnen ---
+                statusManager.Start("open_file", "Datei öffnen");
+                using var fileStream = File.OpenRead(filePath);
+                if (!fileStream.CanRead) 
                 {
-                    var blockCompound = (NbtCompound)tag;
-                    string blockName = blockCompound.Get<NbtString>("Name").Value;
-
-                    if (blockName == "minecraft:air") continue; // ignore air, because it's not a placeable Block
-
-
-
-                    if (!items.ContainsKey(blockName))
-                        items[blockName] = 0;
-
-                    items[blockName]++;
+                    statusManager.Fail("open_file"); throw new Exception();
                 }
-            }
+                statusManager.Success("open_file");
 
-            return items;
+                // --- Entpacken und NBT laden ---
+                statusManager.Start("read_nbt", "Dateistruktur auslesen");
+                using var gzip = new GZipStream(fileStream, CompressionMode.Decompress);
+                var nbtFile = new NbtFile();
+                nbtFile.LoadFromStream(gzip, NbtCompression.None);
+                statusManager.Success("read_nbt");
+
+                // --- Regionen auswerten ---
+                statusManager.Start("parse_regions", "Analysiere Regionen und Blöcke");
+                var root = nbtFile.RootTag;
+                var regions = root.Get<NbtCompound>("Regions");
+                var items = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+                foreach (var regionEntry in regions)
+                {
+                    var region = (NbtCompound)regionEntry;
+                    var palette = region.Get<NbtList>("BlockStatePalette");
+
+                    foreach (var tag in palette)
+                    {
+                        var blockCompound = (NbtCompound)tag;
+                        string blockName = blockCompound.Get<NbtString>("Name").Value;
+
+                        if (blockName == "minecraft:air") 
+                            continue; // ignore air, because it's not a placeable Block
+
+
+
+                        if (!items.ContainsKey(blockName))
+                            items[blockName] = 0;
+
+                        items[blockName]++;
+                    }
+                }
+
+                statusManager.Success("parse_regions");
+                statusManager.Success("import_task");
+                Console.ReadLine();
+                return items;
+            }
+            catch
+            {
+                statusManager.Fail("import_task");
+                Console.ReadLine();
+                return null;
+            }
         }
     }
 }

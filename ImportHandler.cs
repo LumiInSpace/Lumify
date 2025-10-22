@@ -6,9 +6,7 @@ namespace Lumify
     {
         public static void Run()
         {
-            Console.Clear();
-            Console.WriteLine("Unterstützte Datei-Formate: .litematic"); //TODO weitere Formate einbinden
-            Console.WriteLine("'help' für Hilfe");
+            
             
             ImportManager manager = new();
             manager.Register(new LitematicaImportCommand());
@@ -16,6 +14,9 @@ namespace Lumify
 
             while (true) {
 
+                Console.Clear();
+                Console.WriteLine("Unterstützte Datei-Formate: .litematic"); //TODO weitere Formate einbinden
+                Console.WriteLine("'help' für Hilfe");
                 Console.Write("\n>");
                 string? input = Console.ReadLine()?.Trim().ToLower();
                 if (String.IsNullOrWhiteSpace(input)) { continue; }
@@ -33,7 +34,8 @@ namespace Lumify
                         Console.WriteLine("Befehl nicht korrekt. Verwendung: import <pfad>");
                         continue;
                     }
-                    manager.Execute(parts[1]);
+                    string cleanPath = parts[1].Replace('"', ' ').Trim();
+                    manager.Execute(cleanPath);
                 }
                 else
                 {
