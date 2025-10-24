@@ -10,7 +10,7 @@ namespace Lumify
             
             ImportManager manager = new();
             manager.Register(new LitematicaImportCommand());
-            //TODO mehr Imort Formate
+            //TODO mehr Import Formate
 
             while (true) {
 
@@ -18,16 +18,17 @@ namespace Lumify
                 Console.WriteLine("Unterstützte Datei-Formate: .litematic"); //TODO weitere Formate einbinden
                 Console.WriteLine("'help' für Hilfe");
                 Console.Write("\n>");
-                string? input = Console.ReadLine()?.Trim().ToLower();
+                string? input = Console.ReadLine()?.Trim();
                 if (String.IsNullOrWhiteSpace(input)) { continue; }
                 string[] parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                string command = parts[0].ToLower();
 
                 if (input == "help")
                 {
                     GetHelp();
                 }
                 else if (input == "back") { return; }
-                else if (parts[0] == "import")
+                else if (command == "import")
                 {
                     if (parts.Length != 2)
                     {

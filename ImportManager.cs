@@ -13,7 +13,15 @@ namespace Lumify
 
         public void Execute(string filePath)
         {
-            if(String.IsNullOrWhiteSpace(filePath)) return;
+            if (String.IsNullOrWhiteSpace(filePath)) return;
+            filePath = filePath.Replace("~", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+            Console.WriteLine($"[DEBUG] Path: {Path.GetFullPath(filePath)}");
+
+            if (!File.Exists(filePath))
+            {
+                Console.WriteLine("| ❌ | Datei nicht gefunden");
+                return;
+            }
             string[] parts = filePath.Split('.', StringSplitOptions.RemoveEmptyEntries);
             string fileExtension = parts.Last();
 
