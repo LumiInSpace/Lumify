@@ -67,7 +67,6 @@ namespace Lumify.Imports
             catch
             {
                 statusManager.Fail("import_task");
-                Console.ReadLine();
                 return null;
             }
         }

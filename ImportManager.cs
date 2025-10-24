@@ -11,20 +11,40 @@ namespace Lumify
             _imports[import.FileExtension] = import;
         }
 
-        public Dictionary<string, int>? Execute(string filePath)
+        public void Execute(string filePath)
         {
-            if(String.IsNullOrWhiteSpace(filePath)) return null;
+            if(String.IsNullOrWhiteSpace(filePath)) return;
             string[] parts = filePath.Split('.', StringSplitOptions.RemoveEmptyEntries);
             string fileExtension = parts.Last();
 
             if (_imports.TryGetValue(fileExtension, out var importCommand))
             {
-                return importCommand.Execute(filePath);
+                ConvertAndSave(importCommand.Execute(filePath));
             }
             else
             {
                 Console.WriteLine("| ❌ | Dieser Dateintyp wird nicht unterstützt");
-                return null;
+                return;
+            }
+        }
+
+        private void ConvertAndSave(Dictionary<string, int>? itemList)
+        {
+            if (itemList == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("| ❌ | Items konnten nicht extrahiert werden oder die Liste ist leer");
+                Console.ResetColor();
+                return;
+            }
+
+            // --- Entferne minecraft: ---
+
+            Console.WriteLine("Extrahierte Items:");
+
+            foreach (var item in itemList)
+            {
+                Console.WriteLine($"{item.Key}: {item.Value}");
             }
         }
     }

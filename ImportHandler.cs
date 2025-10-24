@@ -42,14 +42,15 @@ namespace Lumify
                     Console.WriteLine("Kein gültiger Befehl. Bitte erneut eingeben!");
                     continue;
                 }
+
+                Console.ReadLine();
             }
         }
 
         public static void GetHelp()
         {
-            Console.WriteLine("'back': Zurück zum Hauptmenü");
-            Console.WriteLine("'import <pfad>': Importiert die ausgewählte Datei");
-
+            Console.WriteLine("back: Zurück zum Hauptmenü");
+            Console.WriteLine("import <pfad>: Importiert die ausgewählte Datei");
         }
     }
 }
