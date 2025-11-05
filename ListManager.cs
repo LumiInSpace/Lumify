@@ -5,9 +5,9 @@ namespace Lumify;
 
 public class ListManager
 {
-    private readonly Dictionary<string, IUserCommand> _commands = new();
+    private readonly Dictionary<string, IListCommand> _commands = new();
 
-    public void Register(IUserCommand command)
+    public void Register(IListCommand command)
     {
         _commands[command.Name.ToLower()] = command;
     }

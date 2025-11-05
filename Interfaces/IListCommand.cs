@@ -2,7 +2,7 @@
 
 namespace Lumify.Interfaces;
 
-public interface IUserCommand
+public interface IListCommand
 {
     string Name { get; }
     string Description { get; }

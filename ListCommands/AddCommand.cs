@@ -1,9 +1,9 @@
 ﻿using Lumify.Models;
 using Lumify.Interfaces;
 
-namespace Lumify.Commands;
+namespace Lumify.ListCommands;
 
-public class AddCommand : IUserCommand
+public class AddCommand : IListCommand
 {
     public string Name => "add";
     public string Description => "Fügt ein Material mit Menge hinzu: add <name> <anzahl>";

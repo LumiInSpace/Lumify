@@ -2,9 +2,9 @@
 using Lumify.Interfaces;
 using Lumify.Models;
 
-namespace Lumify.Commands;
+namespace Lumify.ListCommands;
 
-public class SaveCommand : IUserCommand
+public class SaveCommand : IListCommand
 {
     public string Name => "save";
     public string Description => "Speichert den aktuellen Zustand der Liste";

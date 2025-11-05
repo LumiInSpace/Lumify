@@ -1,9 +1,9 @@
 ﻿using Lumify.Interfaces;
 using Lumify.Models;
 
-namespace Lumify.Commands
+namespace Lumify.ListCommands
 {
-    public class RemoveCommand : IUserCommand
+    public class RemoveCommand : IListCommand
     {
         public string Name => "remove";
         public string Description => "Entfernt ein Material aus der Liste: remove <material>";

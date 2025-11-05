@@ -4,7 +4,7 @@ using System;
 
 namespace Lumify.Core.Commands
 {
-    public class ShowCommand : IUserCommand
+    public class ShowCommand : IListCommand
     {
         public string Name => "show";
         public string Description => "Zeigt alle Materialien an.";
