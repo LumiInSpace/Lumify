@@ -48,9 +48,7 @@ namespace Lumify.Imports
                         string blockName = blockCompound.Get<NbtString>("Name").Value;
 
                         if (blockName == "minecraft:air") 
-                            continue; // ignore air, because it's not a placeable Block
-
-
+                            continue; // Luft ignorieren
 
                         if (!items.ContainsKey(blockName))
                             items[blockName] = 0;

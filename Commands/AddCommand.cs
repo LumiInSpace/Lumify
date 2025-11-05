@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using Lumify.Models;
+﻿using Lumify.Models;
 using Lumify.Interfaces;
 
 namespace Lumify.Commands;

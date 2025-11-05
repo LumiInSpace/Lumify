@@ -1,4 +1,5 @@
 ﻿using Lumify.Interfaces;
+using Lumify.Utilities;
 
 namespace Lumify
 {
@@ -11,57 +12,29 @@ namespace Lumify
             _imports[import.FileExtension] = import;
         }
 
-        public void Execute(string filePath)
+        public Dictionary<string, int>? Execute(string filePath)
         {
-            if (String.IsNullOrWhiteSpace(filePath)) return;
+            if (String.IsNullOrWhiteSpace(filePath)) return null;
             filePath = filePath.Replace("~", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
             Console.WriteLine($"[DEBUG] Path: {Path.GetFullPath(filePath)}");
 
             if (!File.Exists(filePath))
             {
                 Console.WriteLine("| ❌ | Datei nicht gefunden");
-                return;
+                return null;
             }
             string[] parts = filePath.Split('.', StringSplitOptions.RemoveEmptyEntries);
             string fileExtension = parts.Last();
 
             if (_imports.TryGetValue(fileExtension, out var importCommand))
             {
-                ConvertAndSave(importCommand.Execute(filePath));
+                return importCommand.Execute(filePath);
+
             }
             else
             {
                 Console.WriteLine("| ❌ | Dieser Dateintyp wird nicht unterstützt");
-                return;
-            }
-        }
-
-        private void ConvertAndSave(Dictionary<string, int>? itemList)
-        {
-            if (itemList == null)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("| ❌ | Items konnten nicht extrahiert werden oder die Liste ist leer");
-                Console.ResetColor();
-                return;
-            }
-
-            var newDict = new Dictionary<string, int>();
-
-            foreach(var item in itemList)
-            {
-                var parts = item.Key.Split(':');
-                var newKey = parts.Length > 1 ? parts[1] : "";
-                newDict[newKey] = item.Value;
-            }
-
-            itemList = newDict;
-
-            Console.WriteLine("Extrahierte Items:");
-
-            foreach (var item in itemList)
-            {
-                Console.WriteLine($"{item.Key}: {item.Value}");
+                return null;
             }
         }
     }

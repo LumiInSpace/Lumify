@@ -3,7 +3,7 @@ using Lumify.Interfaces;
 
 namespace Lumify;
 
-public class CommandManager
+public class ListManager
 {
     private readonly Dictionary<string, IUserCommand> _commands = new();
 
