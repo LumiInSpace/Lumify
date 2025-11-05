@@ -46,7 +46,16 @@ namespace Lumify
                 return;
             }
 
-            // --- Entferne minecraft: ---
+            var newDict = new Dictionary<string, int>();
+
+            foreach(var item in itemList)
+            {
+                var parts = item.Key.Split(':');
+                var newKey = parts.Length > 1 ? parts[1] : "";
+                newDict[newKey] = item.Value;
+            }
+
+            itemList = newDict;
 
             Console.WriteLine("Extrahierte Items:");
 

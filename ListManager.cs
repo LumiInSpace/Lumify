@@ -12,9 +12,9 @@ public class CommandManager
         _commands[command.Name.ToLower()] = command;
     }
 
-    public void Execute(string input, MaterialList list, string basePath)
+    public bool Execute(string input, MaterialList list, string basePath)
     {
-        if (string.IsNullOrWhiteSpace(input)) return;
+        if (string.IsNullOrWhiteSpace(input)) return false;
 
         string[] parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         string cmdName = parts[0].ToLower();
@@ -22,10 +22,12 @@ public class CommandManager
         if (_commands.TryGetValue(cmdName, out var cmd))
         {
             cmd.Execute(parts, list, basePath);
+            return true;
         }
         else
         {
             Console.WriteLine("| ❌ | Unbekannter Befehl. Tippe 'help' für eine Liste.");
+            return false;
         }
     }
     

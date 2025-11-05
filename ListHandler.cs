@@ -22,11 +22,12 @@ public class ListHandler
         
         while (true)
         {
-            Console.WriteLine($"📂 Projekt '{list.Name}' geöffnet.");
+            Console.WriteLine($"📂 Projekt '{list.Name}' geöffnet. | Einträge: {list.Items.Count}");
             Console.WriteLine("Tippe 'help' für eine Befehlsliste.");
             
             Console.Write("\n> ");
             string? input = Console.ReadLine()?.Trim().ToLower();
+
 
             if (input == "back")
                 break;
@@ -35,7 +36,8 @@ public class ListHandler
                 commandManager.ShowHelp();
             else
                 commandManager.Execute(input, list, materialListPath);
-            
+
+            Console.WriteLine("\nDrücke ENTER um fortzufahren...");
             Console.ReadLine();
             Console.Clear();
         }
