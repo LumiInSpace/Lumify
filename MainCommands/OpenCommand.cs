@@ -18,7 +18,7 @@ namespace Lumify.MainCommands
             }
 
             string name = args[0];
-            string filePath = Path.Combine(basePath, $"{name}.json");
+            string filePath = Path.Combine(basePath, $"{name}.lumify");
 
             if (!File.Exists(filePath))
             {
