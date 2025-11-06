@@ -128,11 +128,5 @@ namespace Lumify
             new MaterialList(name, itemList);
 
         }
-
-        private static string[] SplitCommand(string input)
-        {
-            var matches = Regex.Matches(input, @"[\""].+?[\""]|[^ ]+");
-            return matches.Select(m => m.Value.Trim('"')).ToArray();
-        }
     }
 }
