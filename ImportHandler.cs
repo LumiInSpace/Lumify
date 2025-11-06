@@ -10,7 +10,7 @@ namespace Lumify
         {
 
 
-            ImportManager manager = new();
+            ImportCommandManager manager = new();
             manager.Register(new LitematicaImportCommand());
             //TODO mehr Import Formate
 

@@ -3,7 +3,7 @@ using Lumify.Utilities;
 
 namespace Lumify
 {
-    public class ImportManager()
+    public class ImportCommandManager()
     {
         private readonly Dictionary<string, IImportCommand> _imports = new();
 

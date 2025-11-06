@@ -8,7 +8,7 @@ public class ListHandler
 {
     public static void Run(MaterialList list, string materialListPath)
     {
-        var commandManager = new ListManager();
+        var commandManager = new ListCommandManager();
         
         commandManager.Register(new AddCommand());
         commandManager.Register(new ShowCommand());

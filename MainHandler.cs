@@ -53,8 +53,9 @@ namespace Lumify
             commandManager.Register(new OpenCommand());
             commandManager.Register(new ImportCommand());
 
-            while (true)
+            while (true) //CLI Loop
             {
+
                 Console.Write("\n> ");
                 string? input = Console.ReadLine()?.Trim().ToLower();
 
