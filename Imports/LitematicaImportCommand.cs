@@ -41,19 +41,48 @@ namespace Lumify.Imports
                 {
                     var region = (NbtCompound)regionEntry;
                     var palette = region.Get<NbtList>("BlockStatePalette");
+                    var blockStates = region.Get<NbtLongArray>("BlockStates").Value;
 
-                    foreach (var tag in palette)
+                    var paletteList = new List<string>();
+                    foreach (NbtCompound tag in palette)
+                        paletteList.Add(tag.Get<NbtString>("Name").Value);
+
+                    int bitsPerBlock = Math.Max(2, (int)Math.Ceiling(Math.Log2(paletteList.Count)));
+                    int blocksPerLong = 64 / bitsPerBlock;
+                    int totalBlocks = (blockStates.Length * 64) / bitsPerBlock;
+
+                    int bitIndex = 0;
+                    for (int i = 0; i < totalBlocks; i++)
                     {
-                        var blockCompound = (NbtCompound)tag;
-                        string blockName = blockCompound.Get<NbtString>("Name").Value;
+                        int longIndex = bitIndex / 64;
+                        int startBit = bitIndex % 64;
 
-                        if (blockName == "minecraft:air") 
-                            continue; // Luft ignorieren
+                        if (longIndex >= blockStates.Length)
+                            break; // Sicherheitsabbruch – keine Daten mehr
 
-                        if (!items.ContainsKey(blockName))
-                            items[blockName] = 0;
+                        long current = blockStates[longIndex];
+                        long next = (longIndex + 1 < blockStates.Length) ? blockStates[longIndex + 1] : 0L;
 
-                        items[blockName]++;
+                        // Bits extrahieren, ggf. über Long-Grenze hinweg
+                        long value = (current >> startBit) | (next << (64 - startBit));
+                        int paletteIndex = (int)(value & ((1L << bitsPerBlock) - 1));
+
+                        if (paletteIndex < 0 || paletteIndex >= paletteList.Count)
+                        {
+                            // Ungültiger Index, überspringen
+                            bitIndex += bitsPerBlock;
+                            continue;
+                        }
+
+                        string blockName = paletteList[paletteIndex];
+                        if (blockName != "minecraft:air")
+                        {
+                            if (!items.ContainsKey(blockName))
+                                items[blockName] = 0;
+                            items[blockName]++;
+                        }
+
+                        bitIndex += bitsPerBlock;
                     }
                 }
 
