@@ -1,6 +1,7 @@
 ﻿using Lumify.Imports;
 using Lumify.Models;
 using Lumify.Utilities;
+using System.Text.RegularExpressions;
 
 namespace Lumify
 {
@@ -23,7 +24,7 @@ namespace Lumify
                 Console.Write("\n>");
                 string? input = Console.ReadLine()?.Trim();
                 if (String.IsNullOrWhiteSpace(input)) { continue; }
-                string[] parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                string[] parts = input.Split(' ', count: 2);
                 string command = parts[0].ToLower();
 
                 if (input == "help")
@@ -50,6 +51,7 @@ namespace Lumify
                         continue;
                     }
 
+                    Console.WriteLine("\nDrücke ENTER um fortzufahren...");
                     Console.ReadLine();
                 }
             }
@@ -74,12 +76,17 @@ namespace Lumify
                 return;
             }
 
+            Console.ForegroundColor= ConsoleColor.Magenta;
             Console.WriteLine("Extrahierte Items:");
+            Console.ResetColor();
+            Console.WriteLine();
 
             foreach (var item in itemList)
             {
                 Console.WriteLine($"{item.Key}: {item.Value}");
             }
+
+            Console.WriteLine();
 
             createList = AskYesNoHandler.AskYesNo("Liste aus extrahierten Materialien erstellen?");
             if (createList)
@@ -88,8 +95,6 @@ namespace Lumify
             }
 
             Convert(itemList, createList, removeTag);
-
-
         }
 
         private static void Convert(Dictionary<string, int> itemList, bool createList, bool removeTag)
@@ -122,6 +127,12 @@ namespace Lumify
             
             new MaterialList(name, itemList);
 
+        }
+
+        private static string[] SplitCommand(string input)
+        {
+            var matches = Regex.Matches(input, @"[\""].+?[\""]|[^ ]+");
+            return matches.Select(m => m.Value.Trim('"')).ToArray();
         }
     }
 }
