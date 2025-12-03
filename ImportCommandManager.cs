@@ -16,7 +16,6 @@ namespace Lumify
         {
             if (String.IsNullOrWhiteSpace(filePath)) return null;
             filePath = filePath.Replace("~", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
-            Console.WriteLine($"[DEBUG] Path: {Path.GetFullPath(filePath)}");
 
             if (!File.Exists(filePath))
             {
@@ -29,7 +28,6 @@ namespace Lumify
             if (_imports.TryGetValue(fileExtension, out var importCommand))
             {
                 return importCommand.Execute(filePath);
-
             }
             else
             {

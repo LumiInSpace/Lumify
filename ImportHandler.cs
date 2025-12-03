@@ -39,7 +39,7 @@ namespace Lumify
                         Console.WriteLine("Befehl nicht korrekt. Verwendung: import <pfad>");
                         continue;
                     }
-                    string cleanPath = parts[1].Replace('"', ' ').Trim();
+                    string cleanPath = string.Join(" ", parts.Skip(1)).Trim('"');
                     var itemList = manager.Execute(cleanPath);
                     if (itemList != null)
                     {

@@ -39,7 +39,6 @@ namespace Lumify
 
             if (!Directory.Exists(MaterialListsPath))
             {
-
                 Directory.CreateDirectory(MaterialListsPath);
             }
         }
@@ -55,7 +54,6 @@ namespace Lumify
 
             while (true) //CLI Loop
             {
-
                 Console.Write("\n> ");
                 string? input = Console.ReadLine()?.Trim().ToLower();
 
