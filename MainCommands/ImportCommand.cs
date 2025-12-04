@@ -8,7 +8,7 @@ namespace Lumify.MainCommands
         public string Name => "import";
         public string Description => "Importiert eine .litematic Datei in eine neue Liste";
 
-        public void Execute(string basePath, string[] args)
+        public void Execute(string[] args)
         {
             Console.WriteLine($"| {Emojis.Check} | Import-Modul gestartet.");
             Console.ResetColor();

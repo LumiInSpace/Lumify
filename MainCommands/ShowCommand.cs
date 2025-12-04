@@ -8,9 +8,9 @@ namespace Lumify.MainCommands
         public string Name => "show";
         public string Description => "Listet alle gespeicherten Projekte auf";
 
-        public void Execute(string basePath, string[] args)
+        public void Execute(string[] args)
         {
-            var files = Directory.GetFiles(basePath, "*.json");
+            var files = Directory.GetFiles(GlobalVariables.MaterialListPath, "*.json");
 
             if (files.Length == 0)
             {

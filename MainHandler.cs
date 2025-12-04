@@ -7,10 +7,6 @@ namespace Lumify
 {
     public class MainHandler
     {
-        private static readonly string MaterialListsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Lumify", "Lists");
-        //Windows: C:\Users\<User>\AppData\Roaming\Lumify\Lists
-        //Linux: /home/<user>/.config/Lumify/Lists
-        //MacOS: /Users/<user>/Library/Application Support/Lumify/Lists
 
         public void Initialize()
         {
@@ -38,9 +34,9 @@ namespace Lumify
 
             Console.WriteLine("\n");
 
-            if (!Directory.Exists(MaterialListsPath))
+            if (!Directory.Exists(GlobalVariables.MaterialListPath))
             {
-                Directory.CreateDirectory(MaterialListsPath);
+                Directory.CreateDirectory(GlobalVariables.MaterialListPath);
             }
         }
 
@@ -61,7 +57,7 @@ namespace Lumify
                 if (input == "help")
                     commandManager.ShowHelp();
                 else
-                    commandManager.Execute(input, MaterialListsPath);
+                    commandManager.Execute(input);
 
                 Console.WriteLine("\nDrücke ENTER um fortzufahren...");
                 Console.ReadLine();

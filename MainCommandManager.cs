@@ -18,7 +18,7 @@ namespace Lumify
             _commands[command.Name] = command;
         }
 
-        public bool Execute(string input, string basePath)
+        public bool Execute(string input)
         {
             if (string.IsNullOrWhiteSpace(input)) return false;
 
@@ -28,7 +28,7 @@ namespace Lumify
 
             if (_commands.TryGetValue(cmdName, out var cmd))
             {
-                cmd.Execute(basePath, args);
+                cmd.Execute(args);
                 return true;
             }
 

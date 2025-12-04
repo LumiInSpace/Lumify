@@ -10,7 +10,7 @@ namespace Lumify.MainCommands
         public string Name => "new";
         public string Description => "Erstellt eine neue Materialliste: new <name>";
 
-        public void Execute(string basePath, string[] args)
+        public void Execute(string[] args)
         {
             if (args.Length == 0)
             {
@@ -19,7 +19,7 @@ namespace Lumify.MainCommands
             }
 
             var name = args[0];
-            var filePath = Path.Combine(basePath, $"{name}.lumify");
+            var filePath = Path.Combine(GlobalVariables.MaterialListPath, $"{name}.lumify");
 
             if (File.Exists(filePath))
             {

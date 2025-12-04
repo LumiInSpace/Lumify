@@ -12,6 +12,9 @@ namespace Lumify
         //Path
         public static readonly string BaseDirectory =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Lumify");
+                //Windows: C:\Users\<User>\AppData\Roaming\Lumify\Lists
+                //Linux: /home/<user>/.config/Lumify/Lists
+                //MacOS: /Users/<user>/Library/Application Support/Lumify/Lists
 
         //public static readonly string ConfigPath =
         //    Path.Combine(BaseDirectory, "config.json");

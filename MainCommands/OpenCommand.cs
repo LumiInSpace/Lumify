@@ -10,7 +10,7 @@ namespace Lumify.MainCommands
         public string Name => "open";
         public string Description => "Öffnet ein bestehendes Projekt: open <name>";
 
-        public void Execute(string basePath, string[] args)
+        public void Execute(string[] args)
         {
             if (args.Length == 0)
             {
@@ -19,7 +19,7 @@ namespace Lumify.MainCommands
             }
 
             string name = args[0];
-            string filePath = Path.Combine(basePath, $"{name}.lumify");
+            string filePath = Path.Combine(GlobalVariables.MaterialListPath, $"{name}.lumify");
 
             if (!File.Exists(filePath))
             {

@@ -10,6 +10,6 @@ namespace Lumify.Interfaces
     {
         string Name { get; }
         string Description { get; }
-        void Execute(string basePath, string[] args);
+        void Execute(string[] args);
     }
 }
