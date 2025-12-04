@@ -10,7 +10,7 @@ namespace Lumify.MainCommands
 
         public void Execute(string[] args)
         {
-            var files = Directory.GetFiles(GlobalVariables.MaterialListPath, "*.json");
+            var files = Directory.GetFiles(GlobalVariables.MaterialListPath, "*.lumify");
 
             if (files.Length == 0)
             {

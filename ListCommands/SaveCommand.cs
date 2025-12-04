@@ -15,7 +15,7 @@ public class SaveCommand : IListCommand
         try
         {
             string json = JsonSerializer.Serialize(list, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(basePath, json);
+            File.WriteAllText(GlobalVariables.MaterialListPath, json);
 
             Console.WriteLine($"| {Emojis.Check} | Projekt '{list.Name}' wurde erfolgreich gespeichert!");
         }

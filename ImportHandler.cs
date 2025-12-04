@@ -1,6 +1,8 @@
 ﻿using Lumify.Imports;
+using Lumify.MainCommands;
 using Lumify.Models;
 using Lumify.Utilities;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace Lumify
@@ -71,12 +73,12 @@ namespace Lumify
             if (itemList == null)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("| ❌ | Items konnten nicht extrahiert werden oder die Liste ist leer");
+                Console.WriteLine($"| {Emojis.Cross} | Items konnten nicht extrahiert werden oder die Liste ist leer");
                 Console.ResetColor();
                 return;
             }
 
-            Console.ForegroundColor= ConsoleColor.Magenta;
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Extrahierte Items:");
             Console.ResetColor();
             Console.WriteLine();
@@ -116,17 +118,29 @@ namespace Lumify
                 itemList = newDict;
             }
 
-            Console.Write("Name: ");
-            string? name;
-            while (true) 
+            string name;
+
+            while (true)
             {
-                name = Console.ReadLine();
+                Console.Write("Name: ");
+                name = Console.ReadLine()!;
+                if (string.IsNullOrWhiteSpace(name)) 
+                    continue;
 
-                if (!string.IsNullOrWhiteSpace(name)) break;
+                var filePath = Path.Combine(GlobalVariables.MaterialListPath, $"{name}.lumify");
+
+                if (File.Exists(filePath))
+                {
+                    Console.WriteLine($"| {Emojis.Warning} | Projekt existiert bereits.");
+                    continue;
+                }
+
+                var list = new MaterialList(name, itemList);
+                var json = JsonSerializer.Serialize(list);
+
+                File.WriteAllText(filePath, json);
+                break;
             }
-            
-            new MaterialList(name, itemList);
-
         }
     }
 }
