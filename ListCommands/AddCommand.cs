@@ -1,5 +1,6 @@
 ﻿using Lumify.Models;
 using Lumify.Interfaces;
+using Lumify.Utilities;
 
 namespace Lumify.ListCommands;
 
@@ -12,7 +13,7 @@ public class AddCommand : IListCommand
     {
         if (args.Length < 3 || !int.TryParse(args[2], out int amount))
         {
-            Console.WriteLine("| ❌ | Nutzung: add <material> <anzahl>");
+            Console.WriteLine($"| {Emojis.Cross} | Nutzung: add <material> <anzahl>");
             return;
         }
         
@@ -22,6 +23,6 @@ public class AddCommand : IListCommand
         else
             list.Items[material] = amount;
         
-        Console.WriteLine($"| ✅ |{amount}x {material} hinzugefügt. Gesamt: {list.Items[material]}");
+        Console.WriteLine($"| {Emojis.Check} |{amount}x {material} hinzugefügt. Gesamt: {list.Items[material]}");
     }
 }

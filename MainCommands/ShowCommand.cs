@@ -1,4 +1,5 @@
 ﻿using Lumify.Interfaces;
+using Lumify.Utilities;
 
 namespace Lumify.MainCommands
 {
@@ -17,7 +18,7 @@ namespace Lumify.MainCommands
                 return;
             }
 
-            Console.WriteLine("📜 Projekte:");
+            Console.WriteLine($"{Emojis.List} Projekte:");
             foreach (var f in files)
                 Console.WriteLine(" - " + Path.GetFileNameWithoutExtension(f));
         }

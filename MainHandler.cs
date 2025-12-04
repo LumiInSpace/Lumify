@@ -1,4 +1,5 @@
 ﻿using Lumify.MainCommands;
+using Lumify.Utilities;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,20 +19,20 @@ namespace Lumify
             Console.OutputEncoding = Encoding.UTF8;
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("| ✅ | Lumify gestartet.");
+            Console.WriteLine($"| {Emojis.Check} | Lumify gestartet.");
             Console.ResetColor();
 
             int currentCodePage = Console.OutputEncoding.CodePage;
             if (currentCodePage != 65001)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("| ⚠️ | Es ist keine UTF-8 Codierung aktiviert! Manche Zeichen könnten fehlerhaft dargestellt werden.");
+                Console.WriteLine($"| {Emojis.Warning} | Es ist keine UTF-8 Codierung aktiviert! Manche Zeichen könnten fehlerhaft dargestellt werden.");
                 Console.ResetColor();
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("| ✅ | UTF-8 Codierung verfügbar. ^_~");
+                Console.WriteLine($"| {Emojis.Check} | UTF-8 Codierung verfügbar.");
                 Console.ResetColor();
             }
 

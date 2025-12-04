@@ -1,4 +1,5 @@
 ﻿using Lumify.StatusHandling;
+using Lumify.Utilities;
 
 public class TaskStatusManager
 {
@@ -19,12 +20,12 @@ public class TaskStatusManager
     public void Success(string key)
     {
         if (_tasks.TryGetValue(key, out var task))
-            task.UpdateStatus("✅", ConsoleColor.Green);
+            task.UpdateStatus($"{Emojis.Check}", ConsoleColor.Green);
     }
 
     public void Fail(string key)
     {
         if (_tasks.TryGetValue(key, out var task))
-            task.UpdateStatus("❌", ConsoleColor.Red);
+            task.UpdateStatus($"{Emojis.Cross}", ConsoleColor.Red);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Lumify.Models;
 using Lumify.Interfaces;
+using Lumify.Utilities;
 
 namespace Lumify;
 
@@ -26,14 +27,14 @@ public class ListCommandManager
         }
         else
         {
-            Console.WriteLine("| ❌ | Unbekannter Befehl. Tippe 'help' für eine Liste.");
+            Console.WriteLine($"| {Emojis.Cross} | Unbekannter Befehl. Tippe 'help' für eine Liste.");
             return false;
         }
     }
     
     public void ShowHelp()
     {
-        Console.WriteLine("📜 Verfügbare Befehle:");
+        Console.WriteLine($"{Emojis.List} Verfügbare Befehle:");
         Console.WriteLine("- help: Zeigt diese Liste an.");
         Console.WriteLine("- back: Schließt die Materialliste");
         foreach (var c in _commands.Values)

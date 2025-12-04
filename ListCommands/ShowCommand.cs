@@ -1,5 +1,6 @@
 ﻿using Lumify.Interfaces;
 using Lumify.Models;
+using Lumify.Utilities;
 using System;
 
 namespace Lumify.Core.Commands
@@ -19,7 +20,7 @@ namespace Lumify.Core.Commands
                 return;
             }
 
-            Console.WriteLine("📦 Materialien: \n");
+            Console.WriteLine($"{Emojis.Package} Materialien: \n");
             foreach (var item in list.Items)
                 Console.WriteLine($"- {item.Key}: {item.Value}");
         }

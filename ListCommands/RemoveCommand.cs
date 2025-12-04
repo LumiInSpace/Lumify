@@ -1,5 +1,6 @@
 ﻿using Lumify.Interfaces;
 using Lumify.Models;
+using Lumify.Utilities;
 
 namespace Lumify.ListCommands
 {
@@ -12,7 +13,7 @@ namespace Lumify.ListCommands
         {
             if(args.Length < 2)
             {
-                Console.WriteLine("| ❌ | Nutzung: remove <material>");
+                Console.WriteLine($"| {Emojis.Cross} | Nutzung: remove <material>");
                 return;
             }
 
@@ -21,10 +22,10 @@ namespace Lumify.ListCommands
             if (materialList.Items.ContainsKey(material))
             {
                 materialList.Items.Remove(material);
-                Console.WriteLine($"| ✅ |{material} entfernt.");
+                Console.WriteLine($"| {Emojis.Check} |{material} entfernt.");
             }
             else
-                Console.WriteLine($"| ❌ | Material {material} befindet sich nicht in der Liste");
+                Console.WriteLine($"| {Emojis.Check} | Material {material} befindet sich nicht in der Liste");
 
         }
     }

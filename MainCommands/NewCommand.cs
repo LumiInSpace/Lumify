@@ -1,5 +1,6 @@
 ﻿using Lumify.Interfaces;
 using Lumify.Models;
+using Lumify.Utilities;
 using System.Text.Json;
 
 namespace Lumify.MainCommands
@@ -13,7 +14,7 @@ namespace Lumify.MainCommands
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("| ⚠️ | Bitte Namen angeben. Verwendung: new <name>");
+                Console.WriteLine($"| {Emojis.Warning} | Bitte Namen angeben. Verwendung: new <name>");
                 return;
             }
 
@@ -22,7 +23,7 @@ namespace Lumify.MainCommands
 
             if (File.Exists(filePath))
             {
-                Console.WriteLine("| ⚠️ | Projekt existiert bereits.");
+                Console.WriteLine($"| {Emojis.Warning} | Projekt existiert bereits.");
                 return;
             }
 
@@ -30,7 +31,7 @@ namespace Lumify.MainCommands
             var json = JsonSerializer.Serialize(list, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(filePath, json);
 
-            Console.WriteLine($"| ✅ | Projekt '{name}' erstellt!");
+            Console.WriteLine($"| {Emojis.Check} | Projekt '{name}' erstellt!");
         }
     }
 }

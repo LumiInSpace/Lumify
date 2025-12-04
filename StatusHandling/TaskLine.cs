@@ -21,7 +21,7 @@ namespace Lumify.StatusHandling
 
         public void UpdateStatus(string symbol, ConsoleColor? color = null)
         {
-            lock (Console.Out) //Schutz wegen kritischem Codeabschnitt
+            lock (Console.Out)
             {
                 int currentTop = Console.CursorTop;
                 Console.SetCursorPosition(0, LineIndex);

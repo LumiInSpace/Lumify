@@ -19,7 +19,7 @@ namespace Lumify
 
             if (!File.Exists(filePath))
             {
-                Console.WriteLine("| ❌ | Datei nicht gefunden");
+                Console.WriteLine($"| {Emojis.Cross} | Datei nicht gefunden");
                 return null;
             }
             string[] parts = filePath.Split('.', StringSplitOptions.RemoveEmptyEntries);
@@ -31,7 +31,7 @@ namespace Lumify
             }
             else
             {
-                Console.WriteLine("| ❌ | Dieser Dateintyp wird nicht unterstützt");
+                Console.WriteLine($"| {Emojis.Cross} | Dieser Dateintyp wird nicht unterstützt");
                 return null;
             }
         }

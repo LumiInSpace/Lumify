@@ -1,6 +1,7 @@
 ﻿using Lumify.ListCommands;
 using Lumify.Core.Commands;
 using Lumify.Models;
+using Lumify.Utilities;
 
 namespace Lumify;
 
@@ -22,7 +23,7 @@ public class ListHandler
         
         while (true)
         {
-            Console.WriteLine($"📂 Projekt '{list.Name}' geöffnet. | Einträge: {list.Items.Count}");
+            Console.WriteLine($"{Emojis.OpenFolder} Projekt '{list.Name}' geöffnet. | Einträge: {list.Items.Count}");
             Console.WriteLine("Tippe 'help' für eine Befehlsliste.");
             
             Console.Write("\n> ");

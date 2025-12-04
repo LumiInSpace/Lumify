@@ -1,5 +1,6 @@
 ﻿using Lumify.Interfaces;
 using Lumify.Models;
+using Lumify.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,13 +32,13 @@ namespace Lumify
                 return true;
             }
 
-            Console.WriteLine("| ❌ | Unbekannter Befehl. Tippe 'help' für eine Liste.");
+            Console.WriteLine($"| {Emojis.Cross} | Unbekannter Befehl. Tippe 'help' für eine Liste.");
             return false;
         }
 
         public void ShowHelp()
         {
-            Console.WriteLine("📜 Verfügbare Befehle:");
+            Console.WriteLine($"{Emojis.List} Verfügbare Befehle:");
             Console.WriteLine("- help: Zeigt diese Liste an.");
             foreach (var c in _commands.Values)
                 Console.WriteLine($"- {c.Name}: {c.Description}");

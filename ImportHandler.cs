@@ -88,7 +88,7 @@ namespace Lumify
 
             Console.WriteLine();
 
-            createList = AskYesNoHandler.AskYesNo("Liste aus extrahierten Materialien erstellen?");
+            createList = AskYesNoHandler.AskYesNo($"{Emojis.List} Liste aus extrahierten Materialien erstellen?");
             if (createList)
             {
                 removeTag = AskYesNoHandler.AskYesNo("Item Tag (z.B minecraft:) entfernen?");

@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Lumify.Interfaces;
 using Lumify.Models;
+using Lumify.Utilities;
 
 namespace Lumify.ListCommands;
 
@@ -16,11 +17,11 @@ public class SaveCommand : IListCommand
             string json = JsonSerializer.Serialize(list, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(basePath, json);
 
-            Console.WriteLine($"| ✅ | Projekt '{list.Name}' wurde erfolgreich gespeichert!");
+            Console.WriteLine($"| {Emojis.Check} | Projekt '{list.Name}' wurde erfolgreich gespeichert!");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"| ❌ | Fehler beim Speichern: {ex.Message}");
+            Console.WriteLine($"| {Emojis.Cross} | Fehler beim Speichern.");
         }
     }
 }

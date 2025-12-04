@@ -1,5 +1,6 @@
 ﻿using Lumify.Interfaces;
 using Lumify.Models;
+using Lumify.Utilities;
 using System.Text.Json;
 
 namespace Lumify.MainCommands
@@ -13,7 +14,7 @@ namespace Lumify.MainCommands
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("| ⚠️ | Bitte Projektnamen angeben. Verwendung: open <name>");
+                Console.WriteLine($"| {Emojis.Warning} | Bitte Projektnamen angeben. Verwendung: open <name>");
                 return;
             }
 
@@ -22,7 +23,7 @@ namespace Lumify.MainCommands
 
             if (!File.Exists(filePath))
             {
-                Console.WriteLine("| ❌ | Projekt nicht gefunden.");
+                Console.WriteLine($"| {Emojis.Cross} | Projekt nicht gefunden.");
                 return;
             }
 
@@ -30,7 +31,7 @@ namespace Lumify.MainCommands
             var list = JsonSerializer.Deserialize<MaterialList>(json) ?? new MaterialList(name);
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"| ✅ | Projekt '{name}' geöffnet.");
+            Console.WriteLine($"| {Emojis.Check} | Projekt '{name}' geöffnet.");
             Console.ResetColor();
 
             ListHandler.Run(list, filePath);
