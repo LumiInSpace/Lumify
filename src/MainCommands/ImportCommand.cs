@@ -1,7 +1,8 @@
-﻿using Lumify.Interfaces;
-using Lumify.Utilities;
+﻿using Lumify.src;
+using Lumify.src.Interfaces;
+using Lumify.src.Utilities;
 
-namespace Lumify.MainCommands
+namespace Lumify.src.MainCommands
 {
     public class ImportCommand : IMainCommand
     {

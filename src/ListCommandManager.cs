@@ -1,8 +1,8 @@
-﻿using Lumify.Models;
-using Lumify.Interfaces;
-using Lumify.Utilities;
+﻿using Lumify.src.Interfaces;
+using Lumify.src.Models;
+using Lumify.src.Utilities;
 
-namespace Lumify;
+namespace Lumify.src;
 
 public class ListCommandManager
 {

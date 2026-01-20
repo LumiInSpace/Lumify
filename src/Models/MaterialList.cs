@@ -1,4 +1,4 @@
-﻿namespace Lumify.Models
+﻿namespace Lumify.src.Models
 {
     public class MaterialList
     {

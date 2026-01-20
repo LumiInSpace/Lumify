@@ -1,8 +1,8 @@
 ﻿using fNbt;
-using Lumify.Interfaces;
+using Lumify.src.Interfaces;
 using System.IO.Compression;
 
-namespace Lumify.Imports
+namespace Lumify.src.Imports
 {
     public class LitematicaImportCommand : IImportCommand
     {

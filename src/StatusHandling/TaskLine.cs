@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lumify.StatusHandling
+namespace Lumify.src.StatusHandling
 {
     public class TaskLine
     {

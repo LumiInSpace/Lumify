@@ -1,8 +1,8 @@
-﻿using Lumify.Interfaces;
-using Lumify.Models;
-using Lumify.Utilities;
+﻿using Lumify.src.Interfaces;
+using Lumify.src.Models;
+using Lumify.src.Utilities;
 
-namespace Lumify.ListCommands
+namespace Lumify.src.ListCommands
 {
     public class RemoveCommand : IListCommand
     {

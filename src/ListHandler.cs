@@ -1,9 +1,8 @@
-﻿using Lumify.ListCommands;
-using Lumify.Core.Commands;
-using Lumify.Models;
-using Lumify.Utilities;
+﻿using Lumify.src.ListCommands;
+using Lumify.src.Models;
+using Lumify.src.Utilities;
 
-namespace Lumify;
+namespace Lumify.src;
 
 public class ListHandler
 {

@@ -1,4 +1,4 @@
-﻿namespace Lumify.Utilities
+﻿namespace Lumify.src.Utilities
 {
     public static class AskYesNoHandler
     {

@@ -1,9 +1,8 @@
-﻿using Lumify.MainCommands;
-using Lumify.Utilities;
-using System.Collections.Generic;
+﻿using Lumify.src.MainCommands;
+using Lumify.src.Utilities;
 using System.Text;
 
-namespace Lumify
+namespace Lumify.src
 {
     public class MainHandler
     {

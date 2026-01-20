@@ -1,6 +1,6 @@
-﻿using Lumify.Models;
+﻿using Lumify.src.Models;
 
-namespace Lumify.Interfaces;
+namespace Lumify.src.Interfaces;
 
 public interface IListCommand
 {

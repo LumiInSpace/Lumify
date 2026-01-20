@@ -1,11 +1,10 @@
-﻿using Lumify.Imports;
-using Lumify.MainCommands;
-using Lumify.Models;
-using Lumify.Utilities;
+﻿using Lumify.src.Imports;
+using Lumify.src.MainCommands;
+using Lumify.src.Models;
+using Lumify.src.Utilities;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 
-namespace Lumify
+namespace Lumify.src
 {
     public class ImportHandler
     {

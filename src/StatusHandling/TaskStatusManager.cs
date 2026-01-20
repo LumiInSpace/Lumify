@@ -1,5 +1,5 @@
-﻿using Lumify.StatusHandling;
-using Lumify.Utilities;
+﻿using Lumify.src.StatusHandling;
+using Lumify.src.Utilities;
 
 public class TaskStatusManager
 {

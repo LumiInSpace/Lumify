@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lumify.Interfaces
+namespace Lumify.src.Interfaces
 {
     public interface IMainCommand
     {

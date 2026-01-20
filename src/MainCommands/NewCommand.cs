@@ -1,9 +1,9 @@
-﻿using Lumify.Interfaces;
-using Lumify.Models;
-using Lumify.Utilities;
+﻿using Lumify.src.Models;
+using Lumify.src.Interfaces;
+using Lumify.src.Utilities;
 using System.Text.Json;
 
-namespace Lumify.MainCommands
+namespace Lumify.src.MainCommands
 {
     public class NewCommand : IMainCommand
     {
