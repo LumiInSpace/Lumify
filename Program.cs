@@ -1,18 +1,23 @@
-﻿using Lumify.Models;
-using System.Text;
-using System.Text.Json;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Lumify
 {
     class Program
     {
-        private const string MaterialListsPath = @"C:\ProgramData\Lumify\Lists";
 
         static void Main(string[] args)
         {
-            MainHandler mainHandler = new MainHandler();
-            mainHandler.Initialize();
-            mainHandler.Run();
+            var host = Host.CreateDefaultBuilder(args)
+                .ConfigureServices(services =>
+                {
+                    services.AddSingleton<MainHandler>();
+                })
+                .Build();
+
+            var main = host.Services.GetRequiredService<MainHandler>();
+            main.Initialize();
+            main.Run();
         }
     }
 }
