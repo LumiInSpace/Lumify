@@ -1,13 +1,21 @@
-﻿using Lumify.src;
+using Lumify.src;
+using Lumify.src.Application.Contracts;
 using Lumify.src.Interfaces;
-using Lumify.src.Models;
 using Lumify.src.Utilities;
-using System.Text.Json;
 
 namespace Lumify.src.MainCommands
 {
     public class OpenCommand : IMainCommand
     {
+        private readonly IProjectService _projectService;
+        private readonly ListHandler _listHandler;
+
+        public OpenCommand(IProjectService projectService, ListHandler listHandler)
+        {
+            _projectService = projectService;
+            _listHandler = listHandler;
+        }
+
         public string Name => "open";
         public string Description => "Öffnet ein bestehendes Projekt: open <name>";
 
@@ -20,22 +28,18 @@ namespace Lumify.src.MainCommands
             }
 
             string name = args[0];
-            string filePath = Path.Combine(GlobalVariables.MaterialListPath, $"{name}.lumify");
-
-            if (!File.Exists(filePath))
+            bool opened = _projectService.TryOpen(name, out var list, out string filePath, out string message);
+            if (!opened)
             {
-                Console.WriteLine($"| {Emojis.Cross} | Projekt nicht gefunden.");
+                Console.WriteLine($"| {Emojis.Cross} | {message}");
                 return;
             }
 
-            string json = File.ReadAllText(filePath);
-            var list = JsonSerializer.Deserialize<MaterialList>(json) ?? new MaterialList(name);
-
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"| {Emojis.Check} | Projekt '{name}' geöffnet.");
+            Console.WriteLine($"| {Emojis.Check} | {message}");
             Console.ResetColor();
 
-            ListHandler.Run(list, filePath);
+            _listHandler.Run(list, filePath);
         }
     }
 }

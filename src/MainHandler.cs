@@ -1,15 +1,30 @@
-﻿using Lumify.src.MainCommands;
+using Lumify.src.Configuration;
+using Lumify.src.Interfaces;
 using Lumify.src.Utilities;
+using Microsoft.Extensions.Options;
 using System.Text;
 
 namespace Lumify.src
 {
     public class MainHandler
     {
+        private readonly MainCommandManager _commandManager;
+        private readonly LumifyOptions _options;
+
+        public MainHandler(MainCommandManager commandManager, IEnumerable<IMainCommand> commands, IOptions<LumifyOptions> options)
+        {
+            _commandManager = commandManager;
+            _options = options.Value;
+
+            foreach (var command in commands)
+            {
+                _commandManager.Register(command);
+            }
+        }
 
         public void Initialize()
         {
-            Console.Title = "Lumify";
+            Console.Title = _options.AppName;
 
             Console.OutputEncoding = Encoding.UTF8;
 
@@ -33,30 +48,28 @@ namespace Lumify.src
 
             Console.WriteLine("\n");
 
-            if (!Directory.Exists(GlobalVariables.MaterialListPath))
+            if (!Directory.Exists(_options.MaterialListPath))
             {
-                Directory.CreateDirectory(GlobalVariables.MaterialListPath);
+                Directory.CreateDirectory(_options.MaterialListPath);
             }
         }
 
         public void Run()
         {
-            var commandManager = new MainCommandManager();
-
-            commandManager.Register(new NewCommand());
-            commandManager.Register(new ShowCommand());
-            commandManager.Register(new OpenCommand());
-            commandManager.Register(new ImportCommand());
-
             while (true) //CLI Loop
             {
                 Console.Write("\n> ");
                 string? input = Console.ReadLine()?.Trim().ToLower();
 
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    continue;
+                }
+
                 if (input == "help")
-                    commandManager.ShowHelp();
+                    _commandManager.ShowHelp();
                 else
-                    commandManager.Execute(input);
+                    _commandManager.Execute(input);
 
                 Console.WriteLine("\nDrücke ENTER um fortzufahren...");
                 Console.ReadLine();

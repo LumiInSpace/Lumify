@@ -92,7 +92,6 @@ namespace Lumify.src.Imports
 
                 statusManager.Success("parse_regions");
                 statusManager.Success("import_task");
-                Console.ReadLine();
                 return items;
             }
             catch

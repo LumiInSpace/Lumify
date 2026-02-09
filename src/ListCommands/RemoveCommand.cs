@@ -1,4 +1,5 @@
-﻿using Lumify.src.Interfaces;
+using Lumify.src.Application.Contracts;
+using Lumify.src.Interfaces;
 using Lumify.src.Models;
 using Lumify.src.Utilities;
 
@@ -6,6 +7,13 @@ namespace Lumify.src.ListCommands
 {
     public class RemoveCommand : IListCommand
     {
+        private readonly IMaterialService _materialService;
+
+        public RemoveCommand(IMaterialService materialService)
+        {
+            _materialService = materialService;
+        }
+
         public string Name => "remove";
         public string Description => "Entfernt ein Material aus der Liste: remove <material>";
 
@@ -17,16 +25,15 @@ namespace Lumify.src.ListCommands
                 return;
             }
 
-            string material = args[1];
-
-            if (materialList.Items.ContainsKey(material))
+            string material = args[1].ToLowerInvariant();
+            if (_materialService.Remove(materialList, material))
             {
-                materialList.Items.Remove(material);
                 Console.WriteLine($"| {Emojis.Check} |{material} entfernt.");
             }
             else
-                Console.WriteLine($"| {Emojis.Check} | Material {material} befindet sich nicht in der Liste");
-
+            {
+                Console.WriteLine($"| {Emojis.Warning} | Material {material} befindet sich nicht in der Liste");
+            }
         }
     }
 }

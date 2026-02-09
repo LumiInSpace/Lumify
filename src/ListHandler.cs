@@ -1,4 +1,4 @@
-﻿using Lumify.src.ListCommands;
+using Lumify.src.Interfaces;
 using Lumify.src.Models;
 using Lumify.src.Utilities;
 
@@ -6,14 +6,20 @@ namespace Lumify.src;
 
 public class ListHandler
 {
-    public static void Run(MaterialList list, string materialListPath)
+    private readonly ListCommandManager _commandManager;
+
+    public ListHandler(ListCommandManager commandManager, IEnumerable<IListCommand> commands)
     {
-        var commandManager = new ListCommandManager();
-        
-        commandManager.Register(new AddCommand());
-        commandManager.Register(new ShowCommand());
-        commandManager.Register(new SaveCommand());
-        commandManager.Register(new RemoveCommand());
+        _commandManager = commandManager;
+
+        foreach (var command in commands)
+        {
+            _commandManager.Register(command);
+        }
+    }
+
+    public void Run(MaterialList list, string materialListPath)
+    {
         //TODO more commands
         
         materialListPath = Path.GetFullPath(materialListPath);
@@ -28,14 +34,17 @@ public class ListHandler
             Console.Write("\n> ");
             string? input = Console.ReadLine()?.Trim().ToLower();
 
+            if (string.IsNullOrWhiteSpace(input))
+                continue;
+
 
             if (input == "back")
                 break;
 
             if (input == "help")
-                commandManager.ShowHelp();
+                _commandManager.ShowHelp();
             else
-                commandManager.Execute(input, list, materialListPath);
+                _commandManager.Execute(input, list, materialListPath);
 
             Console.WriteLine("\nDrücke ENTER um fortzufahren...");
             Console.ReadLine();

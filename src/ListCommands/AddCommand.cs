@@ -1,4 +1,5 @@
-﻿using Lumify.src.Interfaces;
+using Lumify.src.Application.Contracts;
+using Lumify.src.Interfaces;
 using Lumify.src.Models;
 using Lumify.src.Utilities;
 
@@ -6,6 +7,13 @@ namespace Lumify.src.ListCommands;
 
 public class AddCommand : IListCommand
 {
+    private readonly IMaterialService _materialService;
+
+    public AddCommand(IMaterialService materialService)
+    {
+        _materialService = materialService;
+    }
+
     public string Name => "add";
     public string Description => "Fügt ein Material mit Menge hinzu: add <name> <anzahl>";
     
@@ -17,12 +25,10 @@ public class AddCommand : IListCommand
             return;
         }
         
-        string material = args[1].ToLower();
-        if (list.Items.ContainsKey(material))
-            list.Items[material] += amount;
-        else
-            list.Items[material] = amount;
+        string material = args[1];
+        _materialService.Add(list, material, amount);
+        string materialKey = material.ToLowerInvariant();
         
-        Console.WriteLine($"| {Emojis.Check} |{amount}x {material} hinzugefügt. Gesamt: {list.Items[material]}");
+        Console.WriteLine($"| {Emojis.Check} |{amount}x {materialKey} hinzugefügt. Gesamt: {list.Items[materialKey]}");
     }
 }

@@ -1,30 +1,33 @@
-﻿using Lumify.src.Imports;
-using Lumify.src.MainCommands;
-using Lumify.src.Models;
+using Lumify.src.Application.Contracts;
 using Lumify.src.Utilities;
-using System.Text.Json;
 
 namespace Lumify.src
 {
     public class ImportHandler
     {
-        public static void Run()
+        private readonly IImportService _importService;
+        private readonly IProjectService _projectService;
+
+        public ImportHandler(IImportService importService, IProjectService projectService)
         {
+            _importService = importService;
+            _projectService = projectService;
+        }
 
-
-            ImportCommandManager manager = new();
-            manager.Register(new LitematicaImportCommand());
-            //TODO mehr Import Formate
-
+        public void Run()
+        {
             while (true)
             {
-
                 Console.Clear();
                 Console.WriteLine("Unterstützte Datei-Formate: .litematic"); //TODO weitere Formate einbinden
                 Console.WriteLine("'help' für Hilfe");
                 Console.Write("\n>");
                 string? input = Console.ReadLine()?.Trim();
-                if (String.IsNullOrWhiteSpace(input)) { continue; }
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    continue;
+                }
+
                 string[] parts = input.Split(' ', count: 2);
                 string command = parts[0].ToLower();
 
@@ -32,7 +35,10 @@ namespace Lumify.src
                 {
                     GetHelp();
                 }
-                else if (input == "back") { return; }
+                else if (input == "back")
+                {
+                    return;
+                }
                 else if (command == "import")
                 {
                     if (parts.Length != 2)
@@ -41,14 +47,14 @@ namespace Lumify.src
                         continue;
                     }
                     string cleanPath = string.Join(" ", parts.Skip(1)).Trim('"');
-                    var itemList = manager.Execute(cleanPath);
+                    var itemList = _importService.ImportFromFile(cleanPath, out string message);
                     if (itemList != null)
                     {
-                        Evalute(itemList);
+                        Evaluate(itemList);
                     }
                     else
                     {
-                        Console.WriteLine("Kein gültiger Befehl. Bitte erneut eingeben!");
+                        Console.WriteLine($"| {Emojis.Cross} | {message}");
                         continue;
                     }
 
@@ -58,13 +64,13 @@ namespace Lumify.src
             }
         }
 
-        public static void GetHelp()
+        public void GetHelp()
         {
             Console.WriteLine("back: Zurück zum Hauptmenü");
             Console.WriteLine("import <pfad>: Importiert die ausgewählte Datei");
         }
 
-        private static void Evalute(Dictionary<string, int>? itemList)
+        private void Evaluate(Dictionary<string, int>? itemList)
         {
             bool createList;
             bool removeTag = false;
@@ -95,15 +101,17 @@ namespace Lumify.src
                 removeTag = AskYesNoHandler.AskYesNo("Item Tag (z.B minecraft:) entfernen?");
             }
 
-            Convert(itemList, createList, removeTag);
+            CreateProjectFromImport(itemList, createList, removeTag);
         }
 
-        private static void Convert(Dictionary<string, int> itemList, bool createList, bool removeTag)
+        private void CreateProjectFromImport(Dictionary<string, int> itemList, bool createList, bool removeTag)
         {
-            if (createList == false)
+            if (!createList)
+            {
                 return;
+            }
 
-            if (removeTag == true)
+            if (removeTag)
             {
                 var newDict = new Dictionary<string, int>();
 
@@ -122,22 +130,20 @@ namespace Lumify.src
             while (true)
             {
                 Console.Write("Name: ");
-                name = Console.ReadLine()!;
-                if (string.IsNullOrWhiteSpace(name)) 
-                    continue;
-
-                var filePath = Path.Combine(GlobalVariables.MaterialListPath, $"{name}.lumify");
-
-                if (File.Exists(filePath))
+                name = Console.ReadLine() ?? "";
+                if (string.IsNullOrWhiteSpace(name))
                 {
-                    Console.WriteLine($"| {Emojis.Warning} | Projekt existiert bereits.");
                     continue;
                 }
 
-                var list = new MaterialList(name, itemList);
-                var json = JsonSerializer.Serialize(list);
+                bool created = _projectService.TryCreate(name, itemList, out string message, out _);
+                if (!created)
+                {
+                    Console.WriteLine($"| {Emojis.Warning} | {message}");
+                    continue;
+                }
 
-                File.WriteAllText(filePath, json);
+                Console.WriteLine($"| {Emojis.Check} | {message}");
                 break;
             }
         }

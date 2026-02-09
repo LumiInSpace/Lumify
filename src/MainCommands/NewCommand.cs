@@ -1,12 +1,18 @@
-﻿using Lumify.src.Models;
+using Lumify.src.Application.Contracts;
 using Lumify.src.Interfaces;
 using Lumify.src.Utilities;
-using System.Text.Json;
 
 namespace Lumify.src.MainCommands
 {
     public class NewCommand : IMainCommand
     {
+        private readonly IProjectService _projectService;
+
+        public NewCommand(IProjectService projectService)
+        {
+            _projectService = projectService;
+        }
+
         public string Name => "new";
         public string Description => "Erstellt eine neue Materialliste: new <name>";
 
@@ -19,19 +25,10 @@ namespace Lumify.src.MainCommands
             }
 
             var name = args[0];
-            var filePath = Path.Combine(GlobalVariables.MaterialListPath, $"{name}.lumify");
-
-            if (File.Exists(filePath))
-            {
-                Console.WriteLine($"| {Emojis.Warning} | Projekt existiert bereits.");
-                return;
-            }
-
-            var list = new MaterialList(name);
-            var json = JsonSerializer.Serialize(list, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(filePath, json);
-
-            Console.WriteLine($"| {Emojis.Check} | Projekt '{name}' erstellt!");
+            bool created = _projectService.TryCreate(name, null, out string message, out _);
+            Console.WriteLine(created
+                ? $"| {Emojis.Check} | {message}"
+                : $"| {Emojis.Warning} | {message}");
         }
     }
 }
