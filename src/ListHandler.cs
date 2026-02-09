@@ -29,9 +29,10 @@ public class ListHandler
         while (true)
         {
             Console.WriteLine($"{Emojis.OpenFolder} Projekt '{list.Name}' geöffnet. | Einträge: {list.Items.Count}");
-            Console.WriteLine("Tippe 'help' für eine Befehlsliste.");
-            
-            Console.Write("\n> ");
+            Console.WriteLine("add <material> <anzahl> | remove <material> | show | save | back");
+            Console.WriteLine("Tippe 'help' für Details.");
+             
+            Console.Write("\nlist> ");
             string? input = Console.ReadLine()?.Trim().ToLower();
 
             if (string.IsNullOrWhiteSpace(input))

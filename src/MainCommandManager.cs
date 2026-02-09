@@ -32,10 +32,21 @@ namespace Lumify.src
 
         public void ShowHelp()
         {
-            Console.WriteLine($"{Emojis.List} Verfügbare Befehle:");
-            Console.WriteLine("- help: Zeigt diese Liste an.");
-            foreach (var c in _commands.Values)
-                Console.WriteLine($"- {c.Name}: {c.Description}");
+            Console.WriteLine($"{Emojis.List} Befehle");
+            Console.WriteLine(new string('─', 48));
+            Console.WriteLine("help   Zeigt diese Liste an");
+
+            foreach (var command in _commands.Values.OrderBy(c => c.Name))
+            {
+                Console.WriteLine($"{command.Name.PadRight(6)} {command.Description}");
+            }
+
+            Console.WriteLine(new string('─', 48));
+        }
+
+        public IReadOnlyList<IMainCommand> GetCommands()
+        {
+            return _commands.Values.OrderBy(c => c.Name).ToList();
         }
     }
 }

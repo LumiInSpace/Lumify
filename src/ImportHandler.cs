@@ -19,9 +19,10 @@ namespace Lumify.src
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine("Import-Modul");
                 Console.WriteLine("Unterstützte Datei-Formate: .litematic"); //TODO weitere Formate einbinden
-                Console.WriteLine("'help' für Hilfe");
-                Console.Write("\n>");
+                Console.WriteLine("import <pfad> | help | back");
+                Console.Write("\nimport> ");
                 string? input = Console.ReadLine()?.Trim();
                 if (string.IsNullOrWhiteSpace(input))
                 {

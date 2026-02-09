@@ -34,10 +34,16 @@ public class ListCommandManager
     
     public void ShowHelp()
     {
-        Console.WriteLine($"{Emojis.List} Verfügbare Befehle:");
-        Console.WriteLine("- help: Zeigt diese Liste an.");
-        Console.WriteLine("- back: Schließt die Materialliste");
-        foreach (var c in _commands.Values)
-            Console.WriteLine($"- {c.Name}: {c.Description}");
+        Console.WriteLine($"{Emojis.List} Listen-Befehle");
+        Console.WriteLine(new string('─', 48));
+        Console.WriteLine("help   Zeigt diese Liste an");
+        Console.WriteLine("back   Schließt die Materialliste");
+
+        foreach (var command in _commands.Values.OrderBy(c => c.Name))
+        {
+            Console.WriteLine($"{command.Name.PadRight(6)} {command.Description}");
+        }
+
+        Console.WriteLine(new string('─', 48));
     }
 }

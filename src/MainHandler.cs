@@ -25,6 +25,7 @@ namespace Lumify.src
         public void Initialize()
         {
             Console.Title = _options.AppName;
+            Console.Clear();
 
             Console.OutputEncoding = Encoding.UTF8;
 
@@ -52,13 +53,15 @@ namespace Lumify.src
             {
                 Directory.CreateDirectory(_options.MaterialListPath);
             }
+
+            PrintWelcome();
         }
 
         public void Run()
         {
             while (true) //CLI Loop
             {
-                Console.Write("\n> ");
+                Console.Write("\nlumify> ");
                 string? input = Console.ReadLine()?.Trim().ToLower();
 
                 if (string.IsNullOrWhiteSpace(input))
@@ -74,7 +77,28 @@ namespace Lumify.src
                 Console.WriteLine("\nDrücke ENTER um fortzufahren...");
                 Console.ReadLine();
                 Console.Clear();
+                PrintWelcome();
             }
+        }
+
+        private void PrintWelcome()
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("LUMIFY");
+            Console.ResetColor();
+
+            Console.WriteLine("Verwalte Materiallisten direkt im Terminal.");
+            Console.WriteLine();
+            Console.WriteLine($"{Emojis.List} Schnellstart");
+            Console.WriteLine(new string('─', 48));
+
+            foreach (var command in _commandManager.GetCommands())
+            {
+                Console.WriteLine($"{command.Name.PadRight(6)} {command.Description}");
+            }
+
+            Console.WriteLine("help   Zeigt alle Befehle kompakt");
+            Console.WriteLine(new string('─', 48));
         }
     }
 }
