@@ -1,16 +1,19 @@
 using Lumify.src.Interfaces;
 using Lumify.src.Models;
+using Lumify.src.Navigation;
 using Lumify.src.Utilities;
 
 namespace Lumify.src;
 
-public class ListHandler
+public class ListCliService
 {
     private readonly ListCommandManager _commandManager;
+    private readonly CliNavigationService _navigation;
 
-    public ListHandler(ListCommandManager commandManager, IEnumerable<IListCommand> commands)
+    public ListCliService(ListCommandManager commandManager, IEnumerable<IListCommand> commands, CliNavigationService navigation)
     {
         _commandManager = commandManager;
+        _navigation = navigation;
 
         foreach (var command in commands)
         {
@@ -20,8 +23,6 @@ public class ListHandler
 
     public void Run(MaterialList list, string materialListPath)
     {
-        //TODO more commands
-        
         materialListPath = Path.GetFullPath(materialListPath);
         
         Console.Clear();
@@ -29,7 +30,7 @@ public class ListHandler
         while (true)
         {
             Console.WriteLine($"{Emojis.OpenFolder} Project '{list.Name}' opened. | Entries: {list.Items.Count}");
-            Console.WriteLine("add <material> <amount> | remove <material> | show | save | back");
+            Console.WriteLine("add <material> <amount> | remove <material> | show | save | back | start");
             Console.WriteLine("Type 'help' for details.");
              
             Console.Write("\nlist> ");
@@ -41,6 +42,12 @@ public class ListHandler
 
             if (input == "back")
                 break;
+
+            if (input == "start")
+            {
+                _navigation.RequestStart();
+                return;
+            }
 
             if (input == "help")
                 _commandManager.ShowHelp();

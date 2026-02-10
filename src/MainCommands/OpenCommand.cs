@@ -8,12 +8,12 @@ namespace Lumify.src.MainCommands
     public class OpenCommand : IMainCommand
     {
         private readonly IProjectService _projectService;
-        private readonly ListHandler _listHandler;
+        private readonly ListCliService _listService;
 
-        public OpenCommand(IProjectService projectService, ListHandler listHandler)
+        public OpenCommand(IProjectService projectService, ListCliService listService)
         {
             _projectService = projectService;
-            _listHandler = listHandler;
+            _listService = listService;
         }
 
         public string Name => "open";
@@ -39,7 +39,7 @@ namespace Lumify.src.MainCommands
             Console.WriteLine($"| {Emojis.Check} | {message}");
             Console.ResetColor();
 
-            _listHandler.Run(list, filePath);
+            _listService.Run(list, filePath);
         }
     }
 }

@@ -6,11 +6,11 @@ namespace Lumify.src.MainCommands
 {
     public class ImportCommand : IMainCommand
     {
-        private readonly ImportHandler _importHandler;
+        private readonly ImportCliService _importService;
 
-        public ImportCommand(ImportHandler importHandler)
+        public ImportCommand(ImportCliService importService)
         {
-            _importHandler = importHandler;
+            _importService = importService;
         }
 
         public string Name => "import";
@@ -21,7 +21,7 @@ namespace Lumify.src.MainCommands
             Console.WriteLine($"| {Emojis.Check} | Import module started.");
             Console.ResetColor();
 
-            _importHandler.Run();
+            _importService.Run();
         }
     }
 }

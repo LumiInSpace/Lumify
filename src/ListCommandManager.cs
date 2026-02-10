@@ -38,6 +38,7 @@ public class ListCommandManager
         Console.WriteLine(new string('─', 48));
         Console.WriteLine("help   Show this list");
         Console.WriteLine("back   Close the material list");
+        Console.WriteLine("start  Return to start screen");
 
         foreach (var command in _commands.Values.OrderBy(c => c.Name))
         {

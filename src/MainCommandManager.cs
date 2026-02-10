@@ -32,12 +32,14 @@ namespace Lumify.src
 
         public void ShowHelp()
         {
-            Console.WriteLine($"{Emojis.List} Commands");
-            Console.WriteLine(new string('─', 48));
-            Console.WriteLine("help   Show this list");
+        Console.WriteLine($"{Emojis.List} Commands");
+        Console.WriteLine(new string('─', 48));
+        Console.WriteLine("help   Show this list");
+        Console.WriteLine("back   Return to start screen");
+        Console.WriteLine("start  Return to start screen");
 
-            foreach (var command in _commands.Values.OrderBy(c => c.Name))
-            {
+        foreach (var command in _commands.Values.OrderBy(c => c.Name))
+        {
                 Console.WriteLine($"{command.Name.PadRight(6)} {command.Description}");
             }
 

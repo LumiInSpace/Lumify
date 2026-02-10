@@ -1,17 +1,20 @@
 using Lumify.src.Application.Contracts;
+using Lumify.src.Navigation;
 using Lumify.src.Utilities;
 
 namespace Lumify.src
 {
-    public class ImportHandler
+    public class ImportCliService
     {
         private readonly IImportService _importService;
         private readonly IProjectService _projectService;
+        private readonly CliNavigationService _navigation;
 
-        public ImportHandler(IImportService importService, IProjectService projectService)
+        public ImportCliService(IImportService importService, IProjectService projectService, CliNavigationService navigation)
         {
             _importService = importService;
             _projectService = projectService;
+            _navigation = navigation;
         }
 
         public void Run()
@@ -21,7 +24,7 @@ namespace Lumify.src
                 Console.Clear();
                 Console.WriteLine("Import Module");
                 Console.WriteLine("Supported file formats: .litematic"); //TODO integrate more formats
-                Console.WriteLine("import <pfad> | help | back");
+                Console.WriteLine("import <pfad> | help | back | start");
                 Console.Write("\nimport> ");
                 string? input = Console.ReadLine()?.Trim();
                 if (string.IsNullOrWhiteSpace(input))
@@ -38,6 +41,11 @@ namespace Lumify.src
                 }
                 else if (input == "back")
                 {
+                    return;
+                }
+                else if (input == "start")
+                {
+                    _navigation.RequestStart();
                     return;
                 }
                 else if (command == "import")
@@ -68,6 +76,7 @@ namespace Lumify.src
         public void GetHelp()
         {
             Console.WriteLine("back: Return to the main menu");
+            Console.WriteLine("start: Return to start screen");
             Console.WriteLine("import <path>: Import the selected file");
         }
 

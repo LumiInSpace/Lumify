@@ -5,7 +5,7 @@ using System;
 
 namespace Lumify.src.ListCommands
 {
-    public class ShowCommand : IListCommand
+    public class ShowListCommand : IListCommand
     {
         public string Name => "show";
         public string Description => "Show all materials.";
