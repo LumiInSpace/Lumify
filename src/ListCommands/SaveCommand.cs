@@ -15,7 +15,7 @@ public class SaveCommand : IListCommand
     }
 
     public string Name => "save";
-    public string Description => "Speichert den aktuellen Zustand der Liste";
+    public string Description => "Save the current state of the list";
 
     public void Execute(string[] args, MaterialList list, string basePath)
     {

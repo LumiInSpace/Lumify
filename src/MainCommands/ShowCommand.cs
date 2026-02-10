@@ -14,7 +14,7 @@ namespace Lumify.src.MainCommands
         }
 
         public string Name => "show";
-        public string Description => "Listet alle gespeicherten Projekte auf";
+        public string Description => "List all saved projects";
 
         public void Execute(string[] args)
         {
@@ -22,11 +22,11 @@ namespace Lumify.src.MainCommands
 
             if (names.Count == 0)
             {
-                Console.WriteLine("Keine Projekte gefunden.");
+                Console.WriteLine("No projects found.");
                 return;
             }
 
-            Console.WriteLine($"{Emojis.List} Projekte:");
+            Console.WriteLine($"{Emojis.List} Projects:");
             foreach (var name in names)
             {
                 Console.WriteLine(" - " + name);

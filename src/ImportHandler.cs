@@ -19,8 +19,8 @@ namespace Lumify.src
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Import-Modul");
-                Console.WriteLine("Unterstützte Datei-Formate: .litematic"); //TODO weitere Formate einbinden
+                Console.WriteLine("Import Module");
+                Console.WriteLine("Supported file formats: .litematic"); //TODO integrate more formats
                 Console.WriteLine("import <pfad> | help | back");
                 Console.Write("\nimport> ");
                 string? input = Console.ReadLine()?.Trim();
@@ -44,7 +44,7 @@ namespace Lumify.src
                 {
                     if (parts.Length != 2)
                     {
-                        Console.WriteLine("Befehl nicht korrekt. Verwendung: import <pfad>");
+                        Console.WriteLine("Invalid command. Usage: import <path>");
                         continue;
                     }
                     string cleanPath = string.Join(" ", parts.Skip(1)).Trim('"');
@@ -59,7 +59,7 @@ namespace Lumify.src
                         continue;
                     }
 
-                    Console.WriteLine("\nDrücke ENTER um fortzufahren...");
+                    Console.WriteLine("\nPress ENTER to continue...");
                     Console.ReadLine();
                 }
             }
@@ -67,8 +67,8 @@ namespace Lumify.src
 
         public void GetHelp()
         {
-            Console.WriteLine("back: Zurück zum Hauptmenü");
-            Console.WriteLine("import <pfad>: Importiert die ausgewählte Datei");
+            Console.WriteLine("back: Return to the main menu");
+            Console.WriteLine("import <path>: Import the selected file");
         }
 
         private void Evaluate(Dictionary<string, int>? itemList)
@@ -79,7 +79,7 @@ namespace Lumify.src
             if (itemList == null)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"| {Emojis.Cross} | Items konnten nicht extrahiert werden oder die Liste ist leer");
+                Console.WriteLine($"| {Emojis.Cross} | Items could not be extracted or the list is empty");
                 Console.ResetColor();
                 return;
             }
@@ -96,10 +96,10 @@ namespace Lumify.src
 
             Console.WriteLine();
 
-            createList = AskYesNoHandler.AskYesNo($"{Emojis.List} Liste aus extrahierten Materialien erstellen?");
+            createList = AskYesNoHandler.AskYesNo($"{Emojis.List} Create a list from extracted materials?");
             if (createList)
             {
-                removeTag = AskYesNoHandler.AskYesNo("Item Tag (z.B minecraft:) entfernen?");
+                removeTag = AskYesNoHandler.AskYesNo("Remove item tag (e.g. minecraft:)?");
             }
 
             CreateProjectFromImport(itemList, createList, removeTag);

@@ -14,13 +14,13 @@ namespace Lumify.src.MainCommands
         }
 
         public string Name => "new";
-        public string Description => "Erstellt eine neue Materialliste: new <name>";
+        public string Description => "Create a new material list: new <name>";
 
         public void Execute(string[] args)
         {
             if (args.Length == 0)
             {
-                Console.WriteLine($"| {Emojis.Warning} | Bitte Namen angeben. Verwendung: new <name>");
+                Console.WriteLine($"| {Emojis.Warning} | Please provide a name. Usage: new <name>");
                 return;
             }
 

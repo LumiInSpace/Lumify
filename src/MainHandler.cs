@@ -30,20 +30,20 @@ namespace Lumify.src
             Console.OutputEncoding = Encoding.UTF8;
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"| {Emojis.Check} | Lumify gestartet.");
+            Console.WriteLine($"| {Emojis.Check} | Lumify started.");
             Console.ResetColor();
 
             int currentCodePage = Console.OutputEncoding.CodePage;
             if (currentCodePage != 65001)
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine($"| {Emojis.Warning} | Es ist keine UTF-8 Codierung aktiviert! Manche Zeichen könnten fehlerhaft dargestellt werden.");
+                Console.WriteLine($"| {Emojis.Warning} | UTF-8 encoding is not enabled. Some characters may be displayed incorrectly.");
                 Console.ResetColor();
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"| {Emojis.Check} | UTF-8 Codierung verfügbar.");
+                Console.WriteLine($"| {Emojis.Check} | UTF-8 encoding available.");
                 Console.ResetColor();
             }
 
@@ -74,7 +74,7 @@ namespace Lumify.src
                 else
                     _commandManager.Execute(input);
 
-                Console.WriteLine("\nDrücke ENTER um fortzufahren...");
+                Console.WriteLine("\nPress ENTER to continue...");
                 Console.ReadLine();
                 Console.Clear();
                 PrintWelcome();
@@ -87,9 +87,9 @@ namespace Lumify.src
             Console.WriteLine("LUMIFY");
             Console.ResetColor();
 
-            Console.WriteLine("Verwalte Materiallisten direkt im Terminal.");
+            Console.WriteLine("Manage material lists directly in the terminal.");
             Console.WriteLine();
-            Console.WriteLine($"{Emojis.List} Schnellstart");
+            Console.WriteLine($"{Emojis.List} Quick Start");
             Console.WriteLine(new string('─', 48));
 
             foreach (var command in _commandManager.GetCommands())
@@ -97,7 +97,7 @@ namespace Lumify.src
                 Console.WriteLine($"{command.Name.PadRight(6)} {command.Description}");
             }
 
-            Console.WriteLine("help   Zeigt alle Befehle kompakt");
+            Console.WriteLine("help   Show all commands");
             Console.WriteLine(new string('─', 48));
         }
     }

@@ -17,13 +17,13 @@ namespace Lumify.src.MainCommands
         }
 
         public string Name => "open";
-        public string Description => "Öffnet ein bestehendes Projekt: open <name>";
+        public string Description => "Open an existing project: open <name>";
 
         public void Execute(string[] args)
         {
             if (args.Length == 0)
             {
-                Console.WriteLine($"| {Emojis.Warning} | Bitte Projektnamen angeben. Verwendung: open <name>");
+                Console.WriteLine($"| {Emojis.Warning} | Please provide a project name. Usage: open <name>");
                 return;
             }
 

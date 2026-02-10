@@ -15,13 +15,13 @@ public class AddCommand : IListCommand
     }
 
     public string Name => "add";
-    public string Description => "Fügt ein Material mit Menge hinzu: add <name> <anzahl>";
+    public string Description => "Add a material with amount: add <name> <amount>";
     
     public void Execute(string[] args, MaterialList list, string basePath)
     {
         if (args.Length < 3 || !int.TryParse(args[2], out int amount))
         {
-            Console.WriteLine($"| {Emojis.Cross} | Nutzung: add <material> <anzahl>");
+            Console.WriteLine($"| {Emojis.Cross} | Usage: add <material> <amount>");
             return;
         }
         
@@ -29,6 +29,6 @@ public class AddCommand : IListCommand
         _materialService.Add(list, material, amount);
         string materialKey = material.ToLowerInvariant();
         
-        Console.WriteLine($"| {Emojis.Check} |{amount}x {materialKey} hinzugefügt. Gesamt: {list.Items[materialKey]}");
+        Console.WriteLine($"| {Emojis.Check} | {amount}x {materialKey} added. Total: {list.Items[materialKey]}");
     }
 }

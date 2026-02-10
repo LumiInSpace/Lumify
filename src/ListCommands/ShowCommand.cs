@@ -8,7 +8,7 @@ namespace Lumify.src.ListCommands
     public class ShowCommand : IListCommand
     {
         public string Name => "show";
-        public string Description => "Zeigt alle Materialien an.";
+        public string Description => "Show all materials.";
 
         public void Execute(string[] args, MaterialList list, string basePath)
         {
@@ -16,11 +16,11 @@ namespace Lumify.src.ListCommands
             
             if (list.Items.Count == 0)
             {
-                Console.WriteLine("Keine Materialien vorhanden.");
+                Console.WriteLine("No materials available.");
                 return;
             }
 
-            Console.WriteLine($"{Emojis.Package} Materialien: \n");
+            Console.WriteLine($"{Emojis.Package} Materials: \n");
             foreach (var item in list.Items)
                 Console.WriteLine($"- {item.Key}: {item.Value}");
         }

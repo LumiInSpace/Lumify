@@ -26,15 +26,15 @@ namespace Lumify.src
                 return true;
             }
 
-            Console.WriteLine($"| {Emojis.Cross} | Unbekannter Befehl. Tippe 'help' für eine Liste.");
+            Console.WriteLine($"| {Emojis.Cross} | Unknown command. Type 'help' for a list.");
             return false;
         }
 
         public void ShowHelp()
         {
-            Console.WriteLine($"{Emojis.List} Befehle");
+            Console.WriteLine($"{Emojis.List} Commands");
             Console.WriteLine(new string('─', 48));
-            Console.WriteLine("help   Zeigt diese Liste an");
+            Console.WriteLine("help   Show this list");
 
             foreach (var command in _commands.Values.OrderBy(c => c.Name))
             {

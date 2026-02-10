@@ -4,7 +4,7 @@
     {
         static public bool AskYesNo(string message)
         {
-            Console.WriteLine($"{message} [j/n]");
+            Console.WriteLine($"{message} [y/n]");
             while (true)
             {
                 var key = Console.ReadKey(intercept: true).KeyChar.ToString().ToLower();

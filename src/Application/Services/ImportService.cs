@@ -16,7 +16,7 @@ public class ImportService : IImportService
     {
         if (string.IsNullOrWhiteSpace(filePath))
         {
-            message = "Dateipfad fehlt.";
+            message = "File path is missing.";
             return null;
         }
 
@@ -24,25 +24,25 @@ public class ImportService : IImportService
 
         if (!File.Exists(filePath))
         {
-            message = "Datei nicht gefunden";
+            message = "File not found";
             return null;
         }
 
         string extension = Path.GetExtension(filePath).TrimStart('.').ToLowerInvariant();
         if (!_imports.TryGetValue(extension, out var importCommand))
         {
-            message = "Dieser Dateityp wird nicht unterstützt";
+            message = "This file type is not supported";
             return null;
         }
 
         var result = importCommand.Execute(filePath);
         if (result == null)
         {
-            message = "Import fehlgeschlagen.";
+            message = "Import failed.";
             return null;
         }
 
-        message = "Import erfolgreich.";
+        message = "Import successful.";
         return result;
     }
 }

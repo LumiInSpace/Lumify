@@ -11,12 +11,12 @@ namespace Lumify.src.Imports
         public Dictionary<string, int>? Execute(string filePath)
         {
             TaskStatusManager statusManager = new TaskStatusManager();
-            statusManager.Start("import_task", "Importiere Datei");
+            statusManager.Start("import_task", "Importing file");
 
             try
             {
                 // --- Datei öffnen ---
-                statusManager.Start("open_file", "Datei öffnen");
+                statusManager.Start("open_file", "Opening file");
                 using var fileStream = File.OpenRead(filePath);
                 if (!fileStream.CanRead) 
                 {
@@ -25,14 +25,14 @@ namespace Lumify.src.Imports
                 statusManager.Success("open_file");
 
                 // --- Entpacken und NBT laden ---
-                statusManager.Start("read_nbt", "Dateistruktur auslesen");
+                statusManager.Start("read_nbt", "Reading file structure");
                 using var gzip = new GZipStream(fileStream, CompressionMode.Decompress);
                 var nbtFile = new NbtFile();
                 nbtFile.LoadFromStream(gzip, NbtCompression.None);
                 statusManager.Success("read_nbt");
 
                 // --- Regionen auswerten ---
-                statusManager.Start("parse_regions", "Analysiere Regionen und Blöcke");
+                statusManager.Start("parse_regions", "Analyzing regions and blocks");
                 var root = nbtFile.RootTag;
                 var regions = root.Get<NbtCompound>("Regions");
                 var items = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);

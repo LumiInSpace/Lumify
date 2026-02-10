@@ -22,19 +22,19 @@ public class ProjectService : IProjectService
 
         if (string.IsNullOrWhiteSpace(name))
         {
-            message = "Bitte Namen angeben.";
+            message = "Please provide a name.";
             return false;
         }
 
         if (_repository.Exists(filePath))
         {
-            message = "Projekt existiert bereits.";
+            message = "Project already exists.";
             return false;
         }
 
         var list = new MaterialList(name, items ?? new Dictionary<string, int>());
         _repository.Save(filePath, list);
-        message = $"Projekt '{name}' erstellt!";
+        message = $"Project '{name}' created!";
         return true;
     }
 
@@ -45,13 +45,13 @@ public class ProjectService : IProjectService
 
         if (!_repository.Exists(filePath))
         {
-            message = "Projekt nicht gefunden.";
+            message = "Project not found.";
             return false;
         }
 
         var loaded = _repository.Load(filePath);
         list = loaded ?? new MaterialList(name);
-        message = $"Projekt '{name}' geöffnet.";
+        message = $"Project '{name}' opened.";
         return true;
     }
 
@@ -60,12 +60,12 @@ public class ProjectService : IProjectService
         try
         {
             _repository.Save(filePath, list);
-            message = $"Projekt '{list.Name}' wurde erfolgreich gespeichert!";
+            message = $"Project '{list.Name}' was saved successfully!";
             return true;
         }
         catch (Exception ex)
         {
-            message = $"Fehler beim Speichern: {ex.Message}";
+            message = $"Error while saving: {ex.Message}";
             return false;
         }
     }

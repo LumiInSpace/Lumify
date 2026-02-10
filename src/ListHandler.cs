@@ -28,9 +28,9 @@ public class ListHandler
         
         while (true)
         {
-            Console.WriteLine($"{Emojis.OpenFolder} Projekt '{list.Name}' geöffnet. | Einträge: {list.Items.Count}");
-            Console.WriteLine("add <material> <anzahl> | remove <material> | show | save | back");
-            Console.WriteLine("Tippe 'help' für Details.");
+            Console.WriteLine($"{Emojis.OpenFolder} Project '{list.Name}' opened. | Entries: {list.Items.Count}");
+            Console.WriteLine("add <material> <amount> | remove <material> | show | save | back");
+            Console.WriteLine("Type 'help' for details.");
              
             Console.Write("\nlist> ");
             string? input = Console.ReadLine()?.Trim().ToLower();
@@ -47,7 +47,7 @@ public class ListHandler
             else
                 _commandManager.Execute(input, list, materialListPath);
 
-            Console.WriteLine("\nDrücke ENTER um fortzufahren...");
+            Console.WriteLine("\nPress ENTER to continue...");
             Console.ReadLine();
             Console.Clear();
         }

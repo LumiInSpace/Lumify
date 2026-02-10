@@ -14,11 +14,11 @@ namespace Lumify.src.MainCommands
         }
 
         public string Name => "import";
-        public string Description => "Importiert eine .litematic Datei in eine neue Liste";
+        public string Description => "Import a .litematic file into a new list";
 
         public void Execute(string[] args)
         {
-            Console.WriteLine($"| {Emojis.Check} | Import-Modul gestartet.");
+            Console.WriteLine($"| {Emojis.Check} | Import module started.");
             Console.ResetColor();
 
             _importHandler.Run();
